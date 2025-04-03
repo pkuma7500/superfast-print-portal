@@ -1,0 +1,36 @@
+import React, { useState } from "react";
+import QRCode from "react-qr-code";
+import { Button, Input } from "@/components/ui";
+
+export default function PrintPortal() {
+  const [aadhaar, setAadhaar] = useState("");
+  const [paid, setPaid] = useState(false);
+  const paymentUPI = "upi://pay?pa=6200158297@naviaxis&pn=PrintService&mc=0000&tid=123456&tr=TXN123456&tn=Print+Charge&am=50&cu=INR";
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-100">
+      <h1 className="text-2xl font-bold mb-4">Advanced Print Portal</h1>
+      <Input
+        type="text"
+        placeholder="Enter Aadhaar Number"
+        value={aadhaar}
+        onChange={(e) => setAadhaar(e.target.value)}
+        className="mb-4 p-2 border rounded"
+      />
+      {!paid ? (
+        <div className="text-center">
+          <p className="mb-2">Pay ₹50 to unlock document</p>
+          <QRCode value={paymentUPI} className="mb-4" />
+          <Button onClick={() => setPaid(true)} className="bg-green-500 text-white px-4 py-2 rounded">
+            I Have Paid
+          </Button>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-green-600 mb-4">Payment Verified! You can now print.</p>
+          <Button className="bg-blue-500 text-white px-4 py-2 rounded">Download Document</Button>
+        </div>
+      )}
+    </div>
+  );
+}
